@@ -1,4 +1,13 @@
+/* Fuentes */
+@font-face{
+    font-family: "Pretendo";
+    src: url("media/fonts/pretendo.ttf");
+}
 
+@font-face{
+    font-family: "play";
+    src: url("media/fonts/play.otf");
+}
 
 /* General */
 *{
@@ -7,62 +16,101 @@
     box-sizing: border-box;
 }
 
+/* Título multicolor */
+header{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 8em;
+    text-align: center;
+    font-family: play;
+}
+
+#titulo1{
+    color:#de0029;
+}
+#titulo2{
+    color:#326db3;
+}
+#titulo3{
+    color: #00AA9E;
+}
+#titulo4{
+    color: #f3c202;
+}
+
+/* Cuerpo y componentes */
 body{
-    width: 100%;
-    height: 100vh;
-    /*display: grid;*/
-    place-items: center;
-    background: grey;
+    width: 100vw;
+    min-height: 100vh;
+    background: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    padding: 20px;
+    gap: 30px;
 }
 
 main{
     display: flex;
-    justify-content: stretch;
-    /*align-items: center;*/
+    justify-content: space-around;
+    align-items: stretch;
     width: 100%;
 }
 
 
 /* Jugadores */
-.playerScores{
-    color: black;
-    border-width: 10px;
-    border-color: black;
-    border-style: solid;
-    padding: 150px;
+.puntuaciones{
+    color: white;
+    border: 5px solid white;
+    border-radius: 20px;
+
+    text-align: center;
+    font-family: play;
+    font-size: 2.5em;
+
+    padding: 20px;
+    width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#player1{
-    background-color: dodgerblue;
+#jugador1{
+    background-color: #326db3;
 }
 
-#player2{
-    background-color: orangered;
-    
+#jugador2{
+    background-color: #de0029;
 }
 
 
 /* Tablero */
-.grid{
+.casillero{
+    color: black;
+    background-color: white;
+    border: 5px solid white;
+    border-radius: 10%;
+    border-style: solid;
+    
+    padding: 10px;
+
+    grid-template-columns: repeat(8,1fr);
+    grid-template-rows: repeat(8,1fr);
+    
     width: 500px;
     height: 500px;
     display: grid;
-    grid-template-columns: repeat(8,1fr);
-    grid-template-rows: repeat(8,1fr);
-    background-color: white;
-    border: dotted thin black;
-}
-
-.grid *{
-    text-align: center;
-    font-size: 40px;
-    transition: 0.2 ease-in-out;
-    cursor: pointer;
-    user-select: none;
-    border: black thin solid;
 }
 
 /* Footer */
 footer{
-    
+    color: white;
+    text-align: center;
+    font-family: play;
+    font-style: italic;
 }

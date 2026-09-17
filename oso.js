@@ -1,1 +1,1 @@
-var side = window.prompt("Hola soy homelo chino");
+//var side = window.prompt("Hola soy homelo chino");
