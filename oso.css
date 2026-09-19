@@ -109,9 +109,18 @@ main{
     justify-content: center;
     align-items: center;
     
-    /* esto es lo que evita que el texto interior haga la casilla gigante*/
+    /* esto es lo que evita que el texto interior haga la casilla gigante */
     min-width: 0;
     min-height: 0;
+}
+
+/* Esto se hace mucho más fácil con combinación de selectores en lugar de en JS */
+#casillero.turnoJ1.casilla:hover{
+    background-color: #326db3;
+}
+
+#casillero.turnoJ2.casilla:hover{
+    background-color: #de0029;
 }
 
 .input_casilla{
@@ -130,9 +139,6 @@ main{
     cursor: pointer; /* esto cambia el símbolo del ratón */
 }
 
-.casilla:hover{
-    background-color: #326db3;
-}
 
 /* Footer */
 footer{
