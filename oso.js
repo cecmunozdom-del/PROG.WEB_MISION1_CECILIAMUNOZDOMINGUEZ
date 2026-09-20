@@ -32,7 +32,7 @@ function formarCasillero(lado){
 formarCasillero(tam); 
 
 
-//TODO: FLUJO DE LA PARTIDA
+//TODO
 function flujoPartida(){
 
     let turno = 1;
@@ -100,6 +100,7 @@ function turnoJ2(){
     casillero.classList.remove('turnoJ1');
 }
 
+//TODO
 function comprobarOSO(){
 
     //CONDICIONES OSO:
@@ -107,13 +108,6 @@ function comprobarOSO(){
     1. la primera O es una casilla ocupada
     2. la S es una de las casillas de alrededor y está ocupada
     3. la segunda O es la que continúa a la S y también está ocupada
-
-
-
-
-
-
-
     */
 
 }
