@@ -115,11 +115,11 @@ main{
 }
 
 /* Esto se hace mucho más fácil con combinación de selectores en lugar de en JS */
-#casillero.turnoJ1.casilla:hover{
+#casillero.turnoJ1 > .casilla:hover{ /* !!! SIN EL ESPACIO NO DETECTA QUE CASILLA ES HIJO DE CASILLERO QUE ES PADRE Y NO FUNCIONA */
     background-color: #326db3;
 }
 
-#casillero.turnoJ2.casilla:hover{
+#casillero.turnoJ2 > .casilla:hover{
     background-color: #de0029;
 }
 
