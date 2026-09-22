@@ -12,11 +12,8 @@ let casillasOso = [];
 
 //FORMACIÓN DEL TABLERO
 function formarCasillero(lado){
+    
     const casillero = document.getElementById('casillero');
-
-    //innerHTML modifica el contenido dentro de un elemento del DOM
-    //en este caso nos sirve para "vaciar" todo el casillero
-    casillero.innerHTML = "";
 
     //divisón en filas y columnas
     casillero.style.gridTemplateColumns = `repeat(${lado}, 1fr)`;
@@ -73,7 +70,6 @@ function formarCasillero(lado){
         // Retrieved 2026-09-21, License - CC BY-SA 3.0
         casilla.addEventListener('contextmenu', event => event.preventDefault());
 
-
     }
 
 }
@@ -87,16 +83,19 @@ function flujoPartida(){
     //TURNO J1
     if(turno%2 != 0){
         turnoJ1();
-        console.log("TURNO P1");
     //TURNO J2
     }else{
         turnoJ2();
-        console.log("TURNO P2");
     }
 
     if(comprobarFinPartida()){
-        console.log("FIN DE PARTIDA");
-        //aquí habría que poner un mensaje de victoria y que se recargue la página que seguro que se puede, y hay que se vuelva al menú
+        if(puntosJ1 > puntosJ2){
+            window.alert("GANADOR : JUGADOR 1");
+        }else if (puntosJ2 < puntosJ1){
+            window.alert("GANADOR : JUGADOR 2");
+        }else{
+            window.alert("EMPATE");
+        }
     }
 
 }
@@ -117,7 +116,7 @@ function comprobarFinPartida(){
     if(casillasOcupadas.length >= (tam*tam)){
         return true;
     }else{
-        false;
+        return false;
     }
 
 }
@@ -126,7 +125,7 @@ function comprobarFinPartida(){
 //LETRAS, INPUTS, COMPROBACIÓN DE O-S-O
 function ponerLetra(casilla){
 
-    //las casillas ya ocupadas las dejamos intocables
+    //en las casillas ocupadas no se pueden poner nuevas letras
     if(!casillasOcupadas.includes(casilla)){
 
         casillasOcupadas.push(casilla);
@@ -167,27 +166,71 @@ function comprobarOSO(){
     /*
     1. que el array sea de 3 casillas, no más y NO MENOS
     2. que el array contenga dos 'O' y una 'S'
-    3. TODO: que estén las 3 casillas en horizontal, vertical o diagonal
+    3. que estén las 3 casillas en horizontal, vertical o diagonal
     */
 
     if(casillasOso.length === 3){
 
-        let l1 = casillasOso[0].querySelector('input').value;
-        let l2 = casillasOso[1].querySelector('input').value;
-        let l3 = casillasOso[2].querySelector('input').value;
+        let l1 = casillasOso[0].querySelector('input').value.toUpperCase();
+        let l2 = casillasOso[1].querySelector('input').value.toUpperCase();
+        let l3 = casillasOso[2].querySelector('input').value.toUpperCase();
 
-        if(l1 === 'O' &&  l2 === 'S' && l3 === 'O'){
+        if((l1 === 'O' &&  l2 === 'S' && l3 === 'O') && comprobarOSODimensional()){
 
-            if(turno % 2 != 0){
-                document.getElementById('contador1').innerHTML = ++puntosJ1;
+            if(turno % 2 !== 0){
+                document.getElementById('contador1').innerHTML = `Tienes ${++puntosJ1} osos`;
             }else{
-                document.getElementById('contador2').innerHTML = ++puntosJ2;
+                document.getElementById('contador2').innerHTML = `Tienes ${++puntosJ1} osos`;
             }
 
+            //si el OSO ha sido válido marcar las casillas en gris oscuro:
+            for(let i = 0; i < casillasOso.length; i++){
+                casillasOso[i].style.backgroundColor = '#3D3D3D';
+            }
         }
 
-    }
+        casillasOso.length = 0; //para vaciar el array para la siguiente comprobación
 
-    casillasOso = []; //para vaciar el array para la siguiente comprobación
+    }
+    
 }
 
+function comprobarOSODimensional(){
+    
+    let id1 = casillasOso[0].id;
+    let id2 = casillasOso[1].id;
+    let id3 = casillasOso[2].id;
+
+    //lo pasamos a coordenadas (cociente me dice la fila y resto la columna)
+    x1 = Math.floor(id1 / tam);
+    y1 = id1 % tam;
+    x2 = Math.floor(id2 / tam);
+    y2 = id2 % tam;
+    x3 = Math.floor(id3 / tam);
+    y3 = id3 % tam;
+
+    //en horizontal -> la fila es igual y la columna difiere de 1
+    if(x1 === x2 && x2 === x3){
+        if(Math.abs(y3-y2) === 1 && Math.abs(y2-y1) === 1){
+            return true;
+        }
+    }
+
+    //en vertical -> la columna es la misma y d
+    if(y1 === y2 && y2 === y3){
+        if(Math.abs(x3-x2) === 1 && Math.abs(x2-x1) === 1){
+            return true;
+        }
+    }
+
+    //en diagonal -> las diferencias de filas y columnas es de 1
+    if(Math.abs(x3-x2) === 1 && Math.abs(x2-x1) === 1){
+        if(Math.abs(y3-y2) === 1 && Math.abs(y2-y1) === 1){
+            return true;
+        }
+    }
+
+    //si se ha llegado hasta aquí es que no hay OSO
+    return false;
+
+}
