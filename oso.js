@@ -180,7 +180,7 @@ function comprobarOSO(){
             if(turno % 2 !== 0){
                 document.getElementById('contador1').innerHTML = `Tienes ${++puntosJ1} osos`;
             }else{
-                document.getElementById('contador2').innerHTML = `Tienes ${++puntosJ1} osos`;
+                document.getElementById('contador2').innerHTML = `Tienes ${++puntosJ2} osos`;
             }
 
             //si el OSO ha sido válido marcar las casillas en gris oscuro:
@@ -202,12 +202,12 @@ function comprobarOSODimensional(){
     let id3 = casillasOso[2].id;
 
     //lo pasamos a coordenadas (cociente me dice la fila y resto la columna)
-    x1 = Math.floor(id1 / tam);
-    y1 = id1 % tam;
-    x2 = Math.floor(id2 / tam);
-    y2 = id2 % tam;
-    x3 = Math.floor(id3 / tam);
-    y3 = id3 % tam;
+    let x1 = Math.floor(id1 / tam);
+    let y1 = id1 % tam;
+    let x2 = Math.floor(id2 / tam);
+    let y2 = id2 % tam;
+    let x3 = Math.floor(id3 / tam);
+    let y3 = id3 % tam;
 
     //en horizontal -> la fila es igual y la columna difiere de 1
     if(x1 === x2 && x2 === x3){
