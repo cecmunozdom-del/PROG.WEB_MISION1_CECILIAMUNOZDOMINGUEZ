@@ -26,12 +26,14 @@ function formarCasillero(lado){
         let casilla = document.createElement('div');
         casilla.classList.add('casilla'); //esto le añade al class="casilla" de html esta clase casilla concreta, así desde css va a ser más fácil decorarlas
         casilla.setAttribute("id", `${i}`);
+        //quitar el innerHTML :[
         casilla.innerHTML = `<input type='text' class='input_casilla' id=input_casilla_num${i}>`; //una clase para todas las casillas, un id para cada una por si acaso
 
         casillasLibres.push(casilla); //añadimos la casilla al array de casillas vacías
         casillero.appendChild(casilla); //añadimos la casilla al casillero
 
         //EventListeners:
+        //TODO: listener para casillero entero y acceder a las casillas con target
         let inputCasilla = document.getElementById(`input_casilla_num${i}`);
         inputCasilla.addEventListener('keydown', function enterPulsado(evento){
             if(evento.key === 'Enter'){ //.key para el teclado
@@ -177,7 +179,7 @@ function comprobarOSO(){
 
         if((l1 === 'O' &&  l2 === 'S' && l3 === 'O') && comprobarOSODimensional()){
 
-            if(turno % 2 !== 0){
+                if(turno % 2 !== 0){ //esto cambiar el innerHTML con textContent
                 document.getElementById('contador1').innerHTML = `Tienes ${++puntosJ1} osos`;
             }else{
                 document.getElementById('contador2').innerHTML = `Tienes ${++puntosJ2} osos`;
