@@ -120,7 +120,6 @@ function comprobarFinPartida(){
     }else{
         return false;
     }
-
 }
 
 

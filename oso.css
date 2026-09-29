@@ -1,15 +1,5 @@
 /* Fuentes */
 @font-face{
-    font-family: "Pretendo";
-    src: url("media/fonts/pretendo.ttf");
-}
-
-@font-face{
-    font-family: "play";
-    src: url("media/fonts/play.otf");
-}
-
-@font-face{
     font-family: "publicPixel";
     src: url("media/fonts/publicPixel.ttf");
 }
@@ -106,7 +96,6 @@ main{
 
 /* Tablero */
 #casillero{
-    color: black;
     background-color: black;
     border: 5px solid white;
    
@@ -130,7 +119,8 @@ main{
 }
 
 /* Esto se hace mucho más fácil con combinación de selectores en lugar de en JS */
-#casillero.turnoJ1 > .casilla:hover{ /* !!! SIN EL ESPACIO NO DETECTA QUE CASILLA ES HIJO DE CASILLERO QUE ES PADRE Y NO FUNCIONA */
+/* SIN EL ESPACIO NO DETECTA QUE CASILLA ES HIJO DE CASILLERO QUE ES PADRE Y NO FUNCIONA */
+#casillero.turnoJ1 > .casilla:hover{ 
     background-color: #279F00;
 }
 

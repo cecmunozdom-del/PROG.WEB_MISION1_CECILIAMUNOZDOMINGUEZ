@@ -11,7 +11,6 @@ const cerrarControles = document.getElementById('cerrarControles');
 
 //Normas
 botonNormas.addEventListener('click', function(e){
-    e.preventDefault(); //evita que busque el enlace (que no existe) para que salga la pantalla directamente
     mostrarNormas.style.display = 'flex';
 })
 
@@ -21,7 +20,6 @@ cerrarNormas.addEventListener('click', function(){
 
 //Controles
 botonControles.addEventListener('click', function(e){
-    e.preventDefault();
     mostrarControles.style.display = 'flex';
 })
 

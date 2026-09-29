@@ -1,16 +1,21 @@
+@font-face{
+    font-family: "publicPixel";
+    src: url("media/fonts/publicPixel.ttf");
+}
+
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* en general incluirá anchos y altos dentro de sus contenedores evitando desbordamientos*/
 }
 
 body{
     background-image: url(media/img/background.png);
-    font-family: 'Press Start 2P', cursive;
+    font-family: publicPixel;
     line-height: 1.4;
     color: white;
 
-    min-height: 100vh;
+    min-height: 100vh; /* TODO: ver lo de los tamaños */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +23,7 @@ body{
 
 .contenido{
     width: 100%;
-    max-width: 600px;
+    max-width: 600px; /* TODO: ver lo de los tamaños */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +34,7 @@ body{
 
 .instrucciones{
     display: none; /* para que esté oculto por defecto */
-    position: fixed;
+    position: fixed; /* mantiene la cajita en el centro de la pantalla (sin esto sale a la derecha modo flex) */
     width: 100vw;
     height: 100vh;
     justify-content: center;
@@ -61,7 +66,7 @@ body{
     font-family: 'Press Start 2P', cursive;
     padding: 10px;
     margin: 10px;
-    cursor: pointer;
+    cursor: pointer; /* cambia el icono del ratón */
     align-self: center;
 }
 
@@ -77,7 +82,7 @@ img{
 }
 
 ul{
-    list-style-type: none;
+    list-style-type: none; /* elimina los puntitos de la lista */
 }
 
 li{
