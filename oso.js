@@ -134,9 +134,9 @@ function ponerLetra(casilla){
 
         //el color de fondo cambia según el jugador que lo haya marcado
         if(turno % 2 != 0){
-            casilla.style.backgroundColor = '#326db3';
+            casilla.style.backgroundColor = '#279F00';
         }else{
-            casilla.style.backgroundColor = '#de0029';
+            casilla.style.backgroundColor = '#42E9F4';
         }
         
     } 
@@ -152,9 +152,9 @@ function agrupacionCasillasOso(casilla){
         if(casillasOcupadas.includes(casilla)){
 
             if(turno % 2 != 0){
-            casilla.style.backgroundColor = '#102238';
+            casilla.style.backgroundColor = '#163d08';
             }else{
-                casilla.style.backgroundColor = '#47000D';
+                casilla.style.backgroundColor = '#103436';
             }
 
         }
@@ -187,7 +187,7 @@ function comprobarOSO(){
 
             //si el OSO ha sido válido marcar las casillas en gris oscuro:
             for(let i = 0; i < casillasOso.length; i++){
-                casillasOso[i].style.backgroundColor = '#3D3D3D';
+                casillasOso[i].style.backgroundColor = 'black';
             }
         }
 

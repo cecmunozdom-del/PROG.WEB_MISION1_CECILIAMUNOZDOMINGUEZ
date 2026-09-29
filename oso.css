@@ -9,6 +9,11 @@
     src: url("media/fonts/play.otf");
 }
 
+@font-face{
+    font-family: "publicPixel";
+    src: url("media/fonts/publicPixel.ttf");
+}
+
 /* General */
 *{
     padding: 0;
@@ -16,27 +21,33 @@
     box-sizing: border-box;
 }
 
-/* Título multicolor */
+/* TODO: Carrusel de OSOS */
 header{
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
     font-size: 8em;
     text-align: center;
-    font-family: play;
+    font-family: publicPixel;
 }
 
 #titulo1{
-    color:#de0029;
+    color:#F83B3A;
 }
 #titulo2{
-    color:#326db3;
+    color:#EBDF64;
 }
 #titulo3{
-    color: #00AA9E;
+    color: #279F00;
 }
 #titulo4{
-    color: #f3c202;
+    color: #DB55DD;
+}
+#titulo5{
+    color: #5353F1;
+}
+#titulo6{
+    color: #42E9F4;
 }
 
 /* Cuerpo y componentes */
@@ -44,6 +55,7 @@ body{
     width: 100vw;
     height: 100vh;
     background: black;
+    background-image: url(media/img/background.png);
 
     display: flex;
     flex-direction: column;
@@ -63,13 +75,12 @@ main{
 
 /* Jugadores */
 .puntuaciones{
-    color: white;
-    border: 5px solid white;
-    border-radius: 20px;
+    border-radius: 0px;
+    border: 10px solid;
 
     text-align: center;
-    font-family: play;
-    font-size: 2.5em;
+    font-family: publicPixel;
+    font-size: 1.9em;
 
     padding: 20px;
     width: 350px;
@@ -81,11 +92,15 @@ main{
 }
 
 #jugador1{
-    background-color: #326db3;
+    color: #279F00;
+    background-color: transparent;
+    border-color: #279F00;
 }
 
 #jugador2{
-    background-color: #de0029;
+    color:#42E9F4;
+    background-color: transparent;
+    border-color: #42E9F4;
 }
 
 
@@ -116,11 +131,11 @@ main{
 
 /* Esto se hace mucho más fácil con combinación de selectores en lugar de en JS */
 #casillero.turnoJ1 > .casilla:hover{ /* !!! SIN EL ESPACIO NO DETECTA QUE CASILLA ES HIJO DE CASILLERO QUE ES PADRE Y NO FUNCIONA */
-    background-color: #326db3;
+    background-color: #279F00;
 }
 
 #casillero.turnoJ2 > .casilla:hover{
-    background-color: #de0029;
+    background-color: #42E9F4;
 }
 
 .input_casilla{
@@ -144,6 +159,6 @@ main{
 footer{
     color: white;
     text-align: center;
-    font-family: play;
+    font-family: publicPixel;
     font-style: italic;
 }
