@@ -8,10 +8,27 @@
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* en general incluirá anchos y altos dentro de sus contenedores evitando desbordamientos */
 }
 
-/* TODO: Carrusel de OSOS */
+/* Cuerpo y componentes */
+body{
+    width: 100vw;
+    min-height: 100vh; /* Para evitar colapsos */
+    background: black;
+    background-image: url(media/img/background.png);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-between;
+
+    padding: 20px;
+    gap: 5px;
+    overflow-x: hidden; /* Evita el scrollbar horizontal global */
+}
+
+/* Título y carrusel*/
 header{
     display: flex;
     justify-content: center;
@@ -19,6 +36,53 @@ header{
     font-size: 8em;
     text-align: center;
     font-family: publicPixel;
+}
+
+.carrusel {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    margin: 20px 0;
+}
+
+.carrusel::-webkit-scrollbar {
+    display: none; /* para quitar la barrita de scroll */
+}
+
+.grupoImagenes{
+    display: flex;
+    align-items: center;
+    gap: 20px; /* separación entre cartas */
+
+    /* para que ocupe todo el ancho de la pantalla y se repartan acordemente */
+    min-width: 100%; 
+    justify-content: space-around;
+
+    animation: spin 12s infinite linear;
+    flex-shrink: 0;
+    padding-right: 1em; /* para salvar el hueco entre grupos */
+}
+
+.imagen {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0; /* esto evita que se aplasten las img entre ellas */
+
+    display: flex;
+    text-align: center;
+    align-content: center;
+}
+
+.imagen > img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* para que la imagen rellene todo el contenedor sin deformarse */ 
+    display: block;
+}
+
+@keyframes spin {
+    from {translate: 0;}
+    to {translate: -100%;}
 }
 
 #titulo1{
@@ -40,20 +104,7 @@ header{
     color: #42E9F4;
 }
 
-/* Cuerpo y componentes */
-body{
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    background-image: url(media/img/background.png);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-    padding: 20px;
-    gap: 20px;
-}
 
 main{
     display: flex;
@@ -151,4 +202,5 @@ footer{
     text-align: center;
     font-family: publicPixel;
     font-style: italic;
+    padding-top: 50px;
 }

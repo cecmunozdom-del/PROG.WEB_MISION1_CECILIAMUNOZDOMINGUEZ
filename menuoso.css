@@ -6,9 +6,10 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* en general incluirá anchos y altos dentro de sus contenedores evitando desbordamientos*/
+    box-sizing: border-box; /* en general incluirá anchos y altos dentro de sus contenedores evitando desbordamientos */
 }
 
+/* Imagen y div principal */
 body{
     background-image: url(media/img/background.png);
     font-family: publicPixel;
@@ -21,7 +22,7 @@ body{
     align-items: center;
 }
 
-.contenido{
+.contenidoPrincipal{
     width: 100%;
     max-width: 600px; /* TODO: ver lo de los tamaños */
     display: flex;
@@ -31,7 +32,41 @@ body{
     margin: 50px auto;
 }
 
+img{
+    width: 100%;
+    max-width: 350px; /* TODO: ver lo de los tamaños */
+}
 
+/* Lista y sus enlaces */
+h2{
+    font-size: 2em;
+}
+
+p{
+    font-size: 1em;
+}
+
+a{
+    color: white;
+    text-decoration: none; /* sin esto salen subrayadas */
+}
+
+a:hover{
+    color: #42E9F4;;
+}
+
+ul{
+    list-style-type: none; /* elimina los puntitos de la lista */
+}
+
+li{
+    margin-bottom: 16px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+
+/* Dentro de las opciones */ 
 .instrucciones{
     display: none; /* para que esté oculto por defecto */
     position: fixed; /* mantiene la cajita en el centro de la pantalla (sin esto sale a la derecha modo flex) */
@@ -54,7 +89,7 @@ body{
     gap: 20px;
 }
 
-.contenidoInstrucciones h2{
+.contenidoInstrucciones > h2{
     color: #42E9F4;;
     font-size: 1.2em;
 }
@@ -63,7 +98,7 @@ body{
     background: transparent;
     border: 2px solid white;
     color: white;
-    font-family: 'Press Start 2P', cursive;
+    font-family: publicPixel;
     padding: 10px;
     margin: 10px;
     cursor: pointer; /* cambia el icono del ratón */
@@ -73,54 +108,4 @@ body{
 .botonCerrar:hover{
     background-color: #42E9F4;;
     color: black;
-}
-
-img{
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-}
-
-ul{
-    list-style-type: none; /* elimina los puntitos de la lista */
-}
-
-li{
-    margin-bottom: 16px;
-    font-size: 1.5em;
-    text-align: center;
-}
-
-a{
-    color: white;
-    text-decoration: none;
-}
-
-a:hover{
-    color: #42E9F4;;
-}
-
-.board{
-    display: flex;
-    flex-direction: row;
-}
-
-.game-area{
-    padding: 12px;
-    position: relative;
-}
-
-.game-data{
-    padding: 12px;
-    width: 240px;
-}
-
-h1{
-    font-size: 36px;
-    margin-bottom: 16px;
-}
-
-p{
-    font-size: 16px;
-    margin-bottom: 20px;
 }

@@ -1,5 +1,12 @@
--Uso de IA: 
-Inicialmente utilicé IA para que me resolviera dudas acerca de HTML, CSS y JS, ya que al principio había cosas de las que no me acordaba bien, o no entendía del todo. Sobre todo en este caso, sobre el funcionamiento de los eventos.
+# OSO
+
+Misión M1 · El Despertar del DOM — Web Development I.
+
+## Cómo probarlo
+Abre menuoso.html en el navegador (o con Live Server) y pulsa Jugar. La tecla secreta para el modo oscuro (en este caso modo claro) es la 'c'.
+
+## Uso de IA
+Usé Gemini CLI (VS Code) como pareja de programación, fase a fase. Inicialmente utilicé IA para que me resolviera dudas acerca de HTML, CSS y JS, ya que al principio había cosas de las que no me acordaba bien, o no entendía del todo. Sobre todo en este caso, sobre el funcionamiento de los eventos.
 También me fue útil a la hora de formar el tablero dinámico con los inputs en cada celda. Busqué varios tutoriales y páginas web acerca del tema, pero siempre usaban métodos que no me convencían del todo, así que le pedí a Gemini que me diera un ejemplo de cómo hacerlo, y gracias a esto pude adaptarlo a mi manera en mi código.
 Además, me dio la idea de que para cambiar el color de las casillas con hover según el turno del jugador, en lugar de hacer varios bucles en js, podía simplemente usar combinaciones de selectores en css, así que investigué eso por mi cuenta y es lo que acabé haciendo, ya que quedaba más limpio y ordenado, y en general son menos líneas de código.
 Durante estos últimos días antes de la fecha final de entrega, he usado bastante la IA para encontrar errores en mi código y resolver problemas que no estaba siendo capaz de solucionar sola. 
@@ -10,7 +17,7 @@ Algunos ejemplos de prompts que he hecho:
 "Te paso mi código de JS para que me digas porqué no aumentan los puntos de los jugadores al marcar OSO" (Era porque no lo estaba pasando a UpperCase y eso al parecer no lo reconocía como 0 - S - O).
 
 
--Autopsia: 
-Decisión difícil 1: inputs en el tablero. No estaba segura sobre la forma de introducir 'o' y 's' en el tablero, porque la idea inicial era simplemente poner click derecho 'o' y click izquierdo 's', o viceversa, pero decidí guardar esos botones de la siguiente manera: el click derecho lo dejé para marcar casillas vacías en las que escribir, y el click izquierdo para marcar las casillas ya seleccionadas a la hora de formar 'oso'.
+## Autopsia
+1. No estaba segura sobre la forma de introducir 'o' y 's' en el tablero, porque la idea inicial era simplemente poner click derecho 'o' y click izquierdo 's', o viceversa, pero decidí guardar esos botones de la siguiente manera: el click derecho lo dejé para marcar casillas vacías en las que escribir, y el click izquierdo para marcar las casillas ya seleccionadas a la hora de formar 'oso'.
 
-Decisión difícil 2: ¿Cómo averiguo si el OSO ha sido puesto en horizontal, vertical, o diagonal? No sabía muy bien cómo enfrentar esta parte del trabajo, así que Gemini me ayudó a comparar las diferentes formas que había para hacerlo. Principalmente eran 2, una de ellas calculando las coordenadas de cada letra dentro del casillero gracias a sus ids (el cociente me dice la fila y el resto la columna), y la otra calculando simplemente la diferencia que había entre las casillas (si estaban en horizontal diferían de 1, si estaban en vertical diferían en 10...). Finalmente decidí intentar la primera opción, ya que era más segura con respecto a los bordes del casillero (podía confundir el final de una fila con la siguiente, ya que son dos números seguidos en ids), y además comprobé que era escalable a cualquier tamaño que le quisiera poner al tablero.
+2. ¿Cómo averiguo si el OSO ha sido puesto en horizontal, vertical, o diagonal? No sabía muy bien cómo enfrentar esta parte del trabajo, así que Gemini me ayudó a comparar las diferentes formas que había para hacerlo. Principalmente eran 2, una de ellas calculando las coordenadas de cada letra dentro del casillero gracias a sus ids (el cociente me dice la fila y el resto la columna), y la otra calculando simplemente la diferencia que había entre las casillas (si estaban en horizontal diferían de 1, si estaban en vertical diferían en 10...). Finalmente decidí intentar la primera opción, ya que era más segura con respecto a los bordes del casillero (podía confundir el final de una fila con la siguiente, ya que son dos números seguidos en ids), y además comprobé que era escalable a cualquier tamaño que le quisiera poner al tablero.
