@@ -5,161 +5,124 @@ let puntosJ2 = 0;
 const tam = 10; //variable del tamaño del lado del tablero, para poder cambiarlo en cualquier momento
 const casillero = document.getElementById('casillero');
 
-let casillasLibres = [];
 let casillasOcupadas = [];
-let casillasOso = [];
+let casillasOSO = [];
+let combinacionesOSO = [];
 
 
 //FORMACIÓN DEL TABLERO
 function formarCasillero(lado){
     
-    const casillero = document.getElementById('casillero');
-
     //divisón en filas y columnas
     casillero.style.gridTemplateColumns = `repeat(${lado}, 1fr)`;
     casillero.style.gridTemplateRows = `repeat(${lado}, 1fr)`;
 
     let casillas = lado * lado;
     for(let i = 0; i < casillas; i++){
-
         //Creación de la casilla:
         let casilla = document.createElement('div');
         casilla.classList.add('casilla'); //esto le añade al class="casilla" de html esta clase casilla concreta, así desde css va a ser más fácil decorarlas
         casilla.setAttribute("id", `${i}`);
-        //quitar el innerHTML :[
-        casilla.innerHTML = `<input type='text' class='input_casilla' id=input_casilla_num${i}>`; //una clase para todas las casillas, un id para cada una por si acaso
-
-        casillasLibres.push(casilla); //añadimos la casilla al array de casillas vacías
         casillero.appendChild(casilla); //añadimos la casilla al casillero
-
-        //EventListeners:
-        //TODO: listener para casillero entero y acceder a las casillas con target
-        let inputCasilla = document.getElementById(`input_casilla_num${i}`);
-        inputCasilla.addEventListener('keydown', function enterPulsado(evento){
-            if(evento.key === 'Enter'){ //.key para el teclado
-
-                //si el usuario no ha metido ni O ni S, que se ponga una de las dos letras aleatoriamente
-                if(inputCasilla.value.toUpperCase() !== 'O' && inputCasilla.value.toUpperCase() !== 'S'){
-                    if(Math.random() < 0.5){ //devuelve un número entre 0-1
-                        inputCasilla.value = 'O';
-                    }else{
-                        inputCasilla.value = 'S';
-                    }
-                }
-
-                comprobarOSO();
-
-                turno++; //cambio de turno
-                flujoPartida();
-                
-            }
-        });
-
-        casilla.addEventListener('mousedown', function clickPulsado(evento){ //el evento de 'click' solo funciona con el click izquierdo
-            //.button para el ratón
-            //va a poner una letra
-            if(evento.button === 0){ 
-                ponerLetra(casilla);
-            //va a marcar OSO
-            }else if(evento.button === 2){ 
-                agrupacionCasillasOso(casilla);
-            }
-        });
-
-        //ESTO EVITA QUE SALGA EL MENÚ CON EL CLICK DERECHO
-        // Source - https://stackoverflow.com/a/737043
-        // Posted by cletus, modified by community. See post 'Timeline' for change history
-        // Retrieved 2026-09-21, License - CC BY-SA 3.0
-        casilla.addEventListener('contextmenu', event => event.preventDefault());
-
     }
 
 }
-
 formarCasillero(tam);
+
+function adicionEventos(){
+
+    //EventListeners:
+    casillero.addEventListener('mousedown', function clickPulsado(evento){ //el evento de 'click' solo funciona con el click izquierdo
+
+        const casilla = evento.target.closest('.casilla');
+
+        //CLICK DERECHO
+        if(evento.button === 0){ //.button para el ratón y el .key para el teclado
+            if(casillasOcupadas.includes(casilla)){
+                entraEnOso(casilla);
+            }else{
+                ponerLetra(casilla, 'O'); //se pondrá una O
+            }
+            
+        //CLICK IZQUIERDO
+        }else if(evento.button === 2){ 
+            ponerLetra(casilla, 'S'); //se pondrá una S
+        }
+
+        //con cada click (se cambia de turno y demás) y se comprueba si ya ha habido victoria
+        flujoPartida();
+    });
+
+    //ESTO EVITA QUE SALGA EL MENÚ CON EL CLICK DERECHO
+    // Source - https://stackoverflow.com/a/737043
+    // Posted by cletus, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-09-21, License - CC BY-SA 3.0
+    casillero.addEventListener('contextmenu', event => event.preventDefault());
+
+}
+adicionEventos();
 
 
 //FLUJO DE PARTIDA Y TURNOS
-function flujoPartida(){
+function actualizarEstiloTurno(){
 
-    //TURNO J1
-    if(turno%2 != 0){
-        turnoJ1();
-    //TURNO J2
+    if(turno % 2 != 0){
+        casillero.classList.add('turnoJ1'); //añade una clase y quita otra
+        casillero.classList.remove('turnoJ2');
     }else{
-        turnoJ2();
-    }
+        casillero.classList.add('turnoJ2'); //añade una clase y quita otra
+        casillero.classList.remove('turnoJ1');
+    } 
 
-    if(comprobarFinPartida()){
+}
+
+function comprobarFinPartida(){
+    if(casillasOcupadas.length >= (tam*tam)){
         if(puntosJ1 > puntosJ2){
             window.alert("GANADOR : JUGADOR 1");
-        }else if (puntosJ2 < puntosJ1){
+        }else if (puntosJ2 > puntosJ1){
             window.alert("GANADOR : JUGADOR 2");
         }else{
             window.alert("EMPATE");
         }
     }
-
-}
-
-flujoPartida();
-
-function turnoJ1(){
-    casillero.classList.add('turnoJ1'); //añade una clase y quita otra
-    casillero.classList.remove('turnoJ2');
-}
-
-function turnoJ2(){
-    casillero.classList.add('turnoJ2'); //añade una clase y quita otra
-    casillero.classList.remove('turnoJ1');
-}
-
-function comprobarFinPartida(){
-    if(casillasOcupadas.length >= (tam*tam)){
-        return true;
-    }else{
-        return false;
-    }
 }
 
 
 //LETRAS, INPUTS, COMPROBACIÓN DE O-S-O
-function ponerLetra(casilla){
+function ponerLetra(casilla, letra){
 
-    //en las casillas ocupadas no se pueden poner nuevas letras
-    if(!casillasOcupadas.includes(casilla)){
-
-        casillasOcupadas.push(casilla);
-
-        //el color de fondo cambia según el jugador que lo haya marcado
-        if(turno % 2 != 0){
-            casilla.style.backgroundColor = '#279F00';
-        }else{
-            casilla.style.backgroundColor = '#42E9F4';
-        }
-        
+    casilla.textContent = letra;
+    casillasOcupadas.push(casilla);
+    
+    if(turno % 2 != 0){
+        casilla.style.backgroundColor = '#279F00';
+    }else{
+        casilla.style.backgroundColor = '#42E9F4';
     } 
 
+    turno++;
+    actualizarEstiloTurno();
+
 }
 
-function agrupacionCasillasOso(casilla){
+function entraEnOso(casilla){
     
-    if(casillasOso.length < 3){
+    if((casillasOSO.length < 3) && (casillasOcupadas.includes(casilla)) && !(casillasOSO.includes(casilla))){
 
-        casillasOso.push(casilla);
+        casillasOSO.push(casilla);
 
-        if(casillasOcupadas.includes(casilla)){
-
-            if(turno % 2 != 0){
+        if(turno % 2 != 0){
             casilla.style.backgroundColor = '#163d08';
-            }else{
-                casilla.style.backgroundColor = '#103436';
-            }
-
+        }else{
+            casilla.style.backgroundColor = '#103436';
         }
+
+        if(casillasOSO.length === 3) comprobarOSO();
+
     }
 
-}
+ }
 
 function comprobarOSO(){
 
@@ -167,30 +130,52 @@ function comprobarOSO(){
     /*
     1. que el array sea de 3 casillas, no más y NO MENOS
     2. que el array contenga dos 'O' y una 'S'
-    3. que estén las 3 casillas en horizontal, vertical o diagonal
+    3. que estén alineadas las 3 casillas en horizontal, vertical o diagonal
     */
 
-    if(casillasOso.length === 3){
+    if(casillasOSO.length === 3){
 
-        let l1 = casillasOso[0].querySelector('input').value.toUpperCase();
-        let l2 = casillasOso[1].querySelector('input').value.toUpperCase();
-        let l3 = casillasOso[2].querySelector('input').value.toUpperCase();
+        let combinacionActual = casillasOSO.map(casilla.id).sort((a, b) => a - b); //para ordenar los valores menor a mayor
 
-        if((l1 === 'O' &&  l2 === 'S' && l3 === 'O') && comprobarOSODimensional()){
+        //comprobamos que esa combinación de IDs no se haya hecho ya
+        //(se pueden usar casillas de un OSO para otros OSOS, pero no el mismo otra vez)
+        let existeComb = false;
+        for(let i = 0; i < combinacionesOSO.length; i++){
+            
+            let combinacionGuardada = combinacionesOSO[i];
 
-                if(turno % 2 !== 0){ //esto cambiar el innerHTML con textContent
-                document.getElementById('contador1').innerHTML = `Tienes ${++puntosJ1} osos`;
+            if(combinacionActual[0] === combinacionGuardada[0] &&
+                combinacionActual[1] === combinacionGuardada[1] &&
+                combinacionActual[2] === combinacionGuardada[2])
+                {
+                    existeComb = true;
+                    break;
+                }
+            
+        }
+
+        //toUpperCase para evitar errores
+        let l1 = casillasOSO[0].textContent.toUpperCase();
+        let l2 = casillasOSO[1].textContent.toUpperCase();
+        let l3 = casillasOSO[2].textContent.toUpperCase();
+
+        if((l1 === 'O' &&  l2 === 'S' && l3 === 'O') && comprobarOSODimensional() && !existeComb){
+
+            combinacionesOSO.push(combinacionActual);
+
+            if((turno-1) % 2 !== 0){ //TODO: lo de los turnos no me convence así
+                document.getElementById('contador1').textContent = `Tienes ${++puntosJ1} osos`;
             }else{
-                document.getElementById('contador2').innerHTML = `Tienes ${++puntosJ2} osos`;
+                document.getElementById('contador2').textContent = `Tienes ${++puntosJ2} osos`;
             }
 
             //si el OSO ha sido válido marcar las casillas en gris oscuro:
-            for(let i = 0; i < casillasOso.length; i++){
-                casillasOso[i].style.backgroundColor = 'black';
+            for(let i = 0; i < casillasOSO.length; i++){
+                casillasOSO[i].style.backgroundColor = 'grey';
             }
         }
 
-        casillasOso.length = 0; //para vaciar el array para la siguiente comprobación
+        casillasOSO.length = 0; //para vaciar el array para la siguiente comprobación
 
     }
     
@@ -198,9 +183,9 @@ function comprobarOSO(){
 
 function comprobarOSODimensional(){
     
-    let id1 = casillasOso[0].id;
-    let id2 = casillasOso[1].id;
-    let id3 = casillasOso[2].id;
+    let id1 = casillasOSO[0].id;
+    let id2 = casillasOSO[1].id;
+    let id3 = casillasOSO[2].id;
 
     //lo pasamos a coordenadas (cociente me dice la fila y resto la columna)
     let x1 = Math.floor(id1 / tam);
@@ -224,9 +209,9 @@ function comprobarOSODimensional(){
         }
     }
 
-    //en diagonal -> las diferencias de filas y columnas es de 1
-    if(Math.abs(x3-x2) === 1 && Math.abs(x2-x1) === 1){
-        if(Math.abs(y3-y2) === 1 && Math.abs(y2-y1) === 1){
+    //en diagonal -> las diferencias de filas y columnas es de 1 //TODO CORREGIR QUE SE HACEN CONITOS no se si lo he corregido bien
+    if(Math.abs(x3-x2) === 1 && Math.abs(x2-x1) === 1 && (Math.abs(x3-x1) === 2)){
+        if(Math.abs(y3-y2) === 1 && Math.abs(y2-y1) === 1 && (Math.abs(y3-y1) === 2)){
             return true;
         }
     }
