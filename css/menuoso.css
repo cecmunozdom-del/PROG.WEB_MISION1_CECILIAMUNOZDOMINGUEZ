@@ -1,3 +1,4 @@
+/* General */
 @font-face{
     font-family: "publicPixel";
     src: url("../media/fonts/publicPixel.ttf");
@@ -8,6 +9,7 @@
     padding: 0;
     box-sizing: border-box; /* en general incluirá anchos y altos dentro de sus contenedores evitando desbordamientos */
 }
+
 
 /* Imagen y div principal */
 body{
@@ -36,6 +38,7 @@ img{
     width: 100%;
     max-width: 350px; /* TODO: ver lo de los tamaños */
 }
+
 
 /* Lista y sus enlaces */
 h2{
