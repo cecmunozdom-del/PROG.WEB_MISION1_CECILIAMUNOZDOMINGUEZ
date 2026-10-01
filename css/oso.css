@@ -1,7 +1,7 @@
 /* Fuentes */
 @font-face{
     font-family: "publicPixel";
-    src: url("media/fonts/publicPixel.ttf");
+    src: url("../media/fonts/publicPixel.ttf");
 }
 
 /* General */
@@ -16,7 +16,7 @@ body{
     width: 100vw;
     min-height: 100vh; /* Para evitar colapsos */
     background: black;
-    background-image: url(media/img/background.png);
+    background-image: url(../media/img/background.png);
 
     display: flex;
     flex-direction: column;
