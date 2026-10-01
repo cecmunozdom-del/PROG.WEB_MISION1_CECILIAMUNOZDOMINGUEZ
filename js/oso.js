@@ -1,8 +1,8 @@
-let turno = 1;
+let jugador = 1;
 let puntosJ1 = 0;
 let puntosJ2 = 0;
 
-const tam = 10; //variable del tamaño del lado del tablero, para poder cambiarlo en cualquier momento
+const tam = 5; //variable del tamaño del lado del tablero, para poder cambiarlo en cualquier momento
 const casillero = document.getElementById('casillero');
 
 let casillasOcupadas = [];
@@ -36,7 +36,7 @@ function adicionEventos(){
 
         const casilla = evento.target.closest('.casilla');
 
-        //CLICK DERECHO
+        //CLICK IZQUIERDO
         if(evento.button === 0){ //.button para el ratón y el .key para el teclado
             if(casillasOcupadas.includes(casilla)){
                 entraEnOso(casilla);
@@ -44,13 +44,11 @@ function adicionEventos(){
                 ponerLetra(casilla, 'O'); //se pondrá una O
             }
             
-        //CLICK IZQUIERDO
+        //CLICK DERECHO
         }else if(evento.button === 2){ 
-            ponerLetra(casilla, 'S'); //se pondrá una S
+            if(!casillasOcupadas.includes(casilla)) ponerLetra(casilla, 'S'); //se pondrá una S
         }
 
-        //con cada click (se cambia de turno y demás) y se comprueba si ya ha habido victoria
-        flujoPartida();
     });
 
     //ESTO EVITA QUE SALGA EL MENÚ CON EL CLICK DERECHO
@@ -66,7 +64,7 @@ adicionEventos();
 //FLUJO DE PARTIDA Y TURNOS
 function actualizarEstiloTurno(){
 
-    if(turno % 2 != 0){
+    if(jugador === 1){
         casillero.classList.add('turnoJ1'); //añade una clase y quita otra
         casillero.classList.remove('turnoJ2');
     }else{
@@ -95,15 +93,17 @@ function ponerLetra(casilla, letra){
     casilla.textContent = letra;
     casillasOcupadas.push(casilla);
     
-    if(turno % 2 != 0){
+    if(jugador === 1){
         casilla.style.backgroundColor = '#279F00';
     }else{
         casilla.style.backgroundColor = '#42E9F4';
     } 
 
-    turno++;
+    //después de poner la letra se pasa turno y cambia el color del hover
+    jugador = 1 - jugador; 
     actualizarEstiloTurno();
 
+    comprobarFinPartida(); //si esta casilla era la última por rellenar, termino la partida
 }
 
 function entraEnOso(casilla){
@@ -112,7 +112,7 @@ function entraEnOso(casilla){
 
         casillasOSO.push(casilla);
 
-        if(turno % 2 != 0){
+        if(jugador === 1){
             casilla.style.backgroundColor = '#163d08';
         }else{
             casilla.style.backgroundColor = '#103436';
@@ -122,7 +122,7 @@ function entraEnOso(casilla){
 
     }
 
- }
+}
 
 function comprobarOSO(){
 
@@ -135,7 +135,8 @@ function comprobarOSO(){
 
     if(casillasOSO.length === 3){
 
-        let combinacionActual = casillasOSO.map(casilla.id).sort((a, b) => a - b); //para ordenar los valores menor a mayor
+        let combinacionActual = casillasOSO.map(casilla => Number(casilla.id)).sort((a, b) => a - b); //para ordenar los valores menor a mayor
+        //Es necesario el Number, porque con map, al ser de callback, lo que hace es transformar el string que devuelve id a un número
 
         //comprobamos que esa combinación de IDs no se haya hecho ya
         //(se pueden usar casillas de un OSO para otros OSOS, pero no el mismo otra vez)
@@ -159,11 +160,14 @@ function comprobarOSO(){
         let l2 = casillasOSO[1].textContent.toUpperCase();
         let l3 = casillasOSO[2].textContent.toUpperCase();
 
-        if((l1 === 'O' &&  l2 === 'S' && l3 === 'O') && comprobarOSODimensional() && !existeComb){
+        if (!existeComb && comprobarOSODimensional() &&
+            (l1 === 'O' &&  l2 === 'S' && l3 === 'O') ||
+            (l1 === 'S' &&  l2 === 'O' && l3 === 'O') ||
+            (l1 === 'O' &&  l2 === 'O' && l3 === 'S')){
 
             combinacionesOSO.push(combinacionActual);
 
-            if((turno-1) % 2 !== 0){ //TODO: lo de los turnos no me convence así
+            if(jugador === 1){
                 document.getElementById('contador1').textContent = `Tienes ${++puntosJ1} osos`;
             }else{
                 document.getElementById('contador2').textContent = `Tienes ${++puntosJ2} osos`;
@@ -172,13 +176,24 @@ function comprobarOSO(){
             //si el OSO ha sido válido marcar las casillas en gris oscuro:
             for(let i = 0; i < casillasOSO.length; i++){
                 casillasOSO[i].style.backgroundColor = 'grey';
+                //si no ha sido válido las devolvemos al color del player que corresponda:
+            }
+        }else{
+            for(let i = 0; i < casillasOSO.length; i++){
+                restaurarFondo(casillasOSO[i]);
             }
         }
+            
 
         casillasOSO.length = 0; //para vaciar el array para la siguiente comprobación
 
     }
     
+}
+
+//si esas 3 casillas no formaban oso, en lugar de que su fondo sea gris, volverá a ser de uno de los colores principales
+function restaurarFondo(casilla){
+    casilla.style.backgroundColor = (jugador === 1) ? '#279F00' : '#42E9F4';
 }
 
 function comprobarOSODimensional(){

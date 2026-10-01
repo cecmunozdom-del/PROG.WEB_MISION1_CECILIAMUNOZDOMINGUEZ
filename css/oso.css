@@ -179,22 +179,6 @@ main{
     background-color: #42E9F4;
 }
 
-.input_casilla{
-    width: 100%;
-    height: 100%;
-
-    border: none;
-    background: transparent; 
-    color: white;
-    text-align: center;
-
-    font-size: 1em;
-    font-weight: bold;
-    text-transform: uppercase;
-    outline: none; /* le quita el borde al pulsar en cada casilla*/
-    cursor: pointer; /* esto cambia el símbolo del ratón */
-}
-
 
 /* Footer */
 footer{
