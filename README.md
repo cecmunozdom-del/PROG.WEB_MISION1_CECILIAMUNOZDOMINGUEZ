@@ -12,6 +12,8 @@ Y al comienzo del proyecto lo usé para resolver muchas dudas que tenía con JS 
 
 Cuando estaba ya terminando de programar la lógica del juego, vi que tal como estaba hecho el código, se permitía seleccionar el mismo "oso" una y otra vez y acumular puntos infinitos, así que para solucionarlo se me ocurrió que podía crear una matriz que me guardase los ids de las casillas de 3 en 3 y revisase que no se volvía a repetir la misma combinación otra vez en toda la partida. Gemini me fue muy útil en esta parte resolviendo dudas, por ejemplo, me recalcó que era importante que los ordenase, y al intentar hacerlo con map y sort como habíamos visto en clase, me corrigió ya que los ids de las casillas eran strings y por tanto debía usar Number(casilla.id) para que funcionase como yo quería.
 
+También destacar que para varias partes del código (como para el modo oscuro) he buscado en webs y he visto tutoriales en Youtube, aunque también me he asegurado de no incluir nada que no entendiera en mi trabajo. Por ejemplo, para el modo claro y oscuro, usé IA para que me explicara bien cómo funcionaba localStorage con setItem, y el porqué es mejor usar 'inactive' que null (ya que localStorage recibe un string y poner null puede dar lugar a problemas).
+
 Durante estos últimos días antes de la fecha final de entrega, he usado Gemini para encontrar errores en mi código, resolver problemas que no estaba siendo capaz de solucionar sola, y corregir algunos problemas de organización del código (WebArena es insistente con no repetir código). 
 
 Algunos ejemplos de prompts que he hecho a lo largo del trabajo:

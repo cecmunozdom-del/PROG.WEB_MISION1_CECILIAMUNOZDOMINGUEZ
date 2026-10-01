@@ -9,6 +9,8 @@ let casillasOcupadas = [];
 let casillasOSO = [];
 let combinacionesOSO = [];
 
+const body = document.body;
+let lightmode = localStorage.getItem('lightmode'); //clase de css con las variables en modo claro
 
 //FORMACIÓN DEL TABLERO
 function formarCasillero(lado){
@@ -56,6 +58,19 @@ function adicionEventos(){
     // Posted by cletus, modified by community. See post 'Timeline' for change history
     // Retrieved 2026-09-21, License - CC BY-SA 3.0
     casillero.addEventListener('contextmenu', event => event.preventDefault());
+
+
+    //tecla secreta para cambio de modo oscuro/claro
+    body.addEventListener('keydown', function teclaSecreta(evento){
+
+        //comprobamos si se ha pulsado la c, y si está activo el lightmode lo desactivamos y viceversa
+        if(evento.key.toLowerCase() === 'c'){
+            lightmode = localStorage.getItem('lightmode');
+            lightmode !== "active" ? activarModoClaro() : activarModoOscuro();
+        }
+
+    });
+
 
 }
 adicionEventos();
@@ -235,3 +250,24 @@ function comprobarOSODimensional(){
     return false;
 
 }
+
+
+//MODO CLARO / OSCURO
+/*
+localStorage guarda los datos en clave-valor dentro de la máquina del usuario
+esta info no se borra al recargar ni cerrar la página
+setItem lo que hace es modificar el valor guardado en 'clave' (setItem('clave', 'valor'))
+*/
+
+function activarModoClaro(){
+    body.classList.add('lightmode');
+    localStorage.setItem('lightmode', 'active');
+}
+
+function activarModoOscuro(){
+    body.classList.remove('lightmode');
+    localStorage.setItem('lightmode', 'inactive');
+}
+
+if(lightmode === "active") activarModoClaro();
+
