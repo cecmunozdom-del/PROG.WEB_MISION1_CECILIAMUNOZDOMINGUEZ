@@ -37,6 +37,7 @@ function adicionEventos(){
     casillero.addEventListener('click', function clickPulsado(evento){ //el evento de 'click' solo funciona con el click izquierdo
     //mejor utilizar click (más estándar) porque se espera que el raton se presione y se suelte, mientras que con mousedown se hace inmediatamente
         const casilla = evento.target.closest('.casilla');
+        if(!casilla) return;
 
         if(casillasOcupadas.includes(casilla)){
             entraEnOso(casilla);
@@ -51,6 +52,7 @@ function adicionEventos(){
         evento.preventDefault(); //esto evita que se se abra el menú
 
         const casilla = evento.target.closest('.casilla');
+        if(!casilla) return;
 
         if(!casillasOcupadas.includes(casilla)) ponerLetra(casilla, 'S'); //se pondrá una S
     });
@@ -84,6 +86,7 @@ function actualizarEstiloTurno(){
     } 
 
 }
+actualizarEstiloTurno();
 
 function comprobarFinPartida(){
     if(casillasOcupadas.length >= (tam*tam)){
@@ -111,7 +114,7 @@ function ponerLetra(casilla, letra){
     } 
 
     //después de poner la letra se pasa turno y cambia el color del hover
-    jugador = 1 - jugador; 
+    jugador = (jugador === 1) ? 2 : 1;
     actualizarEstiloTurno();
 
     comprobarFinPartida(); //si esta casilla era la última por rellenar, termino la partida
@@ -171,10 +174,7 @@ function comprobarOSO(){
         let l2 = casillasOSO[1].textContent.toUpperCase();
         let l3 = casillasOSO[2].textContent.toUpperCase();
 
-        if (!existeComb && comprobarOSODimensional() &&
-            ((l1 === 'O' &&  l2 === 'S' && l3 === 'O') ||
-            (l1 === 'S' &&  l2 === 'O' && l3 === 'O') ||
-            (l1 === 'O' &&  l2 === 'O' && l3 === 'S'))){ 
+        if (!existeComb && comprobarOSODimensional() && l1 === 'O' &&  l2 === 'S' && l3 === 'O'){ 
 
             combinacionesOSO.push(combinacionActual);
 
