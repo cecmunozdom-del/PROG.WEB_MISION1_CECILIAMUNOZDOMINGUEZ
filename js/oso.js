@@ -33,31 +33,27 @@ formarCasillero(tam);
 
 function adicionEventos(){
 
-    //EventListeners:
-    casillero.addEventListener('mousedown', function clickPulsado(evento){ //el evento de 'click' solo funciona con el click izquierdo
+    //Click izquierdo:
+    casillero.addEventListener('click', function clickPulsado(evento){ //el evento de 'click' solo funciona con el click izquierdo
+    //mejor utilizar click (más estándar) porque se espera que el raton se presione y se suelte, mientras que con mousedown se hace inmediatamente
+        const casilla = evento.target.closest('.casilla');
+
+        if(casillasOcupadas.includes(casilla)){
+            entraEnOso(casilla);
+        }else{
+            ponerLetra(casilla, 'O'); //se pondrá una O
+        }
+    });
+
+    //Click derecho
+    casillero.addEventListener('contextmenu', function(evento){
+        
+        evento.preventDefault(); //esto evita que se se abra el menú
 
         const casilla = evento.target.closest('.casilla');
 
-        //CLICK IZQUIERDO
-        if(evento.button === 0){ //.button para el ratón y el .key para el teclado
-            if(casillasOcupadas.includes(casilla)){
-                entraEnOso(casilla);
-            }else{
-                ponerLetra(casilla, 'O'); //se pondrá una O
-            }
-            
-        //CLICK DERECHO
-        }else if(evento.button === 2){ 
-            if(!casillasOcupadas.includes(casilla)) ponerLetra(casilla, 'S'); //se pondrá una S
-        }
-
+        if(!casillasOcupadas.includes(casilla)) ponerLetra(casilla, 'S'); //se pondrá una S
     });
-
-    //ESTO EVITA QUE SALGA EL MENÚ CON EL CLICK DERECHO
-    // Source - https://stackoverflow.com/a/737043
-    // Posted by cletus, modified by community. See post 'Timeline' for change history
-    // Retrieved 2026-09-21, License - CC BY-SA 3.0
-    casillero.addEventListener('contextmenu', event => event.preventDefault());
 
 
     //tecla secreta para cambio de modo oscuro/claro
@@ -109,9 +105,9 @@ function ponerLetra(casilla, letra){
     casillasOcupadas.push(casilla);
     
     if(jugador === 1){
-        casilla.style.backgroundColor = '#279F00';
+        casilla.classList.add('jugador1');
     }else{
-        casilla.style.backgroundColor = '#42E9F4';
+        casilla.classList.add('jugador2');
     } 
 
     //después de poner la letra se pasa turno y cambia el color del hover
@@ -128,9 +124,9 @@ function entraEnOso(casilla){
         casillasOSO.push(casilla);
 
         if(jugador === 1){
-            casilla.style.backgroundColor = '#163d08';
+            casilla.classList.add('seleccion-j1');
         }else{
-            casilla.style.backgroundColor = '#103436';
+            casilla.classList.add('seleccion-j2');
         }
 
         if(casillasOSO.length === 3) comprobarOSO();
@@ -176,9 +172,9 @@ function comprobarOSO(){
         let l3 = casillasOSO[2].textContent.toUpperCase();
 
         if (!existeComb && comprobarOSODimensional() &&
-            (l1 === 'O' &&  l2 === 'S' && l3 === 'O') ||
+            ((l1 === 'O' &&  l2 === 'S' && l3 === 'O') ||
             (l1 === 'S' &&  l2 === 'O' && l3 === 'O') ||
-            (l1 === 'O' &&  l2 === 'O' && l3 === 'S')){
+            (l1 === 'O' &&  l2 === 'O' && l3 === 'S'))){ 
 
             combinacionesOSO.push(combinacionActual);
 
@@ -190,9 +186,10 @@ function comprobarOSO(){
 
             //si el OSO ha sido válido marcar las casillas en gris oscuro:
             for(let i = 0; i < casillasOSO.length; i++){
-                casillasOSO[i].style.backgroundColor = 'grey';
-                //si no ha sido válido las devolvemos al color del player que corresponda:
+                casillasOSO[i].classList.remove('jugador1', 'jugador2', 'seleccion-j1', 'seleccion-j2');
+                casillasOSO[i].classList.add('marcado-oso');       
             }
+            //si no ha sido válido las devolvemos al color del player que corresponda:
         }else{
             for(let i = 0; i < casillasOSO.length; i++){
                 restaurarFondo(casillasOSO[i]);
@@ -208,7 +205,7 @@ function comprobarOSO(){
 
 //si esas 3 casillas no formaban oso, en lugar de que su fondo sea gris, volverá a ser de uno de los colores principales
 function restaurarFondo(casilla){
-    casilla.style.backgroundColor = (jugador === 1) ? '#279F00' : '#42E9F4';
+    casilla.classList.remove('seleccion-j1', 'seleccion-j2');
 }
 
 function comprobarOSODimensional(){
@@ -239,7 +236,7 @@ function comprobarOSODimensional(){
         }
     }
 
-    //en diagonal -> las diferencias de filas y columnas es de 1 //TODO CORREGIR QUE SE HACEN CONITOS no se si lo he corregido bien
+    //en diagonal -> las diferencias de filas y columnas es de 1 
     if(Math.abs(x3-x2) === 1 && Math.abs(x2-x1) === 1 && (Math.abs(x3-x1) === 2)){
         if(Math.abs(y3-y2) === 1 && Math.abs(y2-y1) === 1 && (Math.abs(y3-y1) === 2)){
             return true;

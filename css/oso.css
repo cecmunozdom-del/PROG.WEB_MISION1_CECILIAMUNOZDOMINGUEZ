@@ -179,6 +179,26 @@ main{
     font-size: 1.5em;
 }
 
+.casilla.jugador1 {
+  background-color: #279F00;
+}
+
+.casilla.jugador2 {
+  background-color: #42E9F4;
+}
+
+.casilla.seleccion-j1 {
+    background-color: #163d08;
+}
+
+.casilla.seleccion-j2 {
+    background-color: #103436;
+}
+
+.casilla.marcado-oso {
+  background-color: grey; /* Color cuando forma OSO, por ejemplo */
+}
+
 /* Esto se hace mucho más fácil con combinación de selectores en lugar de en JS */
 /* SIN EL ESPACIO NO DETECTA QUE CASILLA ES HIJO DE CASILLERO QUE ES PADRE Y NO FUNCIONA */
 #casillero.turnoJ1 > .casilla:hover{ 
